@@ -302,6 +302,25 @@
   width: 100%;
 }
 
+/* Faint, associative photo behind a tier (used on the mobil bilpleie page).
+   Grey + blurred + very low opacity → an association, never a distraction.
+   Rounded via border-radius:inherit; no overflow:hidden so the badge shows. */
+.tier--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--tile-img, none) center / cover no-repeat;
+  filter: grayscale(1) blur(4px);
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+.tier--photo > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* small note under the tier grid */
 .tiers-note {
   margin: clamp(20px, 3vw, 30px) auto 0;
