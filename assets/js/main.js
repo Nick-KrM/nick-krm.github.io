@@ -231,10 +231,76 @@ function initBurger() {
 }
 
 /* =========================================================
+   Before / After — reusable comparison slider ("shutter")
+   Works with mouse, touch (Pointer Events) and keyboard.
+   Any element matching [data-ba] on the page is initialised.
+   ========================================================= */
+function initBeforeAfter() {
+  const sliders = document.querySelectorAll("[data-ba]");
+
+  sliders.forEach(slider => {
+    const range = slider.querySelector(".ba-range");
+    const start = parseFloat(slider.dataset.baStart);
+    let pos = Number.isFinite(start) ? start : 50;
+    let dragging = false;
+
+    function apply(p) {
+      pos = Math.max(0, Math.min(100, p));
+      slider.style.setProperty("--pos", pos + "%");
+      if (range) {
+        range.setAttribute("aria-valuenow", Math.round(pos));
+        range.setAttribute("aria-valuetext", Math.round(100 - pos) + " % etter synlig");
+      }
+    }
+
+    function posFromX(clientX) {
+      const r = slider.getBoundingClientRect();
+      return ((clientX - r.left) / r.width) * 100;
+    }
+
+    apply(pos);
+
+    slider.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      slider.classList.add("is-dragging");
+      if (slider.setPointerCapture) {
+        try { slider.setPointerCapture(e.pointerId); } catch (_) {}
+      }
+      apply(posFromX(e.clientX));
+      e.preventDefault();
+    });
+
+    slider.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      apply(posFromX(e.clientX));
+    });
+
+    function endDrag() {
+      dragging = false;
+      slider.classList.remove("is-dragging");
+    }
+    slider.addEventListener("pointerup", endDrag);
+    slider.addEventListener("pointercancel", endDrag);
+
+    if (range) {
+      range.addEventListener("keydown", (e) => {
+        let d = 0;
+        if (e.key === "ArrowLeft") d = -2;
+        else if (e.key === "ArrowRight") d = 2;
+        else if (e.key === "Home") { apply(0); e.preventDefault(); return; }
+        else if (e.key === "End") { apply(100); e.preventDefault(); return; }
+        if (d) { apply(pos + d); e.preventDefault(); }
+      });
+    }
+  });
+}
+
+/* =========================================================
    Boot
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
+  initBeforeAfter();
   loadPartial("site-header", "/partials/header.html", () => {
     initBurger();
     initScrollSpy();

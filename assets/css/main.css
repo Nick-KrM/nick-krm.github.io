@@ -24,3 +24,8 @@
 @import url("./sections/visit.css");
 @import url("./sections/why-us.css");
 @import url("./sections/cta.css");
+
+/* =====================
+   COMPONENTS
+   ===================== */
+@import url("./components/before-after.css");

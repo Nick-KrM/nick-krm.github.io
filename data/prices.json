@@ -1,0 +1,174 @@
+{
+  "_om": "Prisliste – én kilde til sannhet for nettsiden. Alle priser i NOK og INKL. 25% MVA (forbrukerpris). Endre her, så oppdaterer vi sidene.",
+  "valuta": "NOK",
+  "mva_inkludert": true,
+  "oppdatert": "2026-07-04",
+  "generell_note": "Alle priser gjelder vanlige personbiler. For varebil, bobil eller svært tilsmussede interiører kan det tilkomme et tillegg. Du får alltid et prisestimat før vi starter arbeidet.",
+
+  "pakker": {
+    "forhandssalg": {
+      "navn": "Forhåndssalg",
+      "beskrivelse": "Komplett salgsklargjøring: utvendig vask, innvendig rens, 1-stegs blankpolering, voks og dekkglans.",
+      "pris": 4999,
+      "fra": true,
+      "tid": "fra 1 dag (ca. 8 t)",
+      "status": "bekreftet"
+    },
+    "toppakke_keramikk": {
+      "navn": "Toppakke – Keramikk",
+      "navn_status": "midlertidig – kan endres senere",
+      "beskrivelse": "Vår mest komplette pakke for nye og nesten nye biler: full keramisk beskyttelse for maksimal glans, hydrofobisk effekt og UV-beskyttelse.",
+      "inkluderer": [
+        "Utvendig vask",
+        "Innvendig rens",
+        "Behandling av seter",
+        "Keramisk coating på lakk – to lag (beste keramikk) for maksimal beskyttelse",
+        "Keramisk coating på felger",
+        "Keramisk coating på glass og utvendig plast"
+      ],
+      "pris": 11999,
+      "fra": false,
+      "tid": "2 dager",
+      "status": "bekreftet"
+    }
+  },
+
+  "tjenester": {
+    "bilvask": {
+      "navn": "Bilvask (utvendig)",
+      "beskrivelse": "Trefaset håndvask med avfetting.",
+      "kategori": "vask",
+      "pris": 899,
+      "fra": false,
+      "tid": "45–60 min",
+      "status": "bekreftet"
+    },
+    "motorvask": {
+      "navn": "Motorvask",
+      "beskrivelse": "Skånsom rengjøring av motorrom.",
+      "kategori": "vask",
+      "pris": 999,
+      "fra": false,
+      "tid": "inntil 1 t",
+      "status": "bekreftet"
+    },
+    "vask_og_innvendig": {
+      "navn": "Vask + innvendig rens",
+      "beskrivelse": "Utvendig vask kombinert med rask innvendig rens.",
+      "kategori": "kombi",
+      "pris": 1699,
+      "fra": false,
+      "tid": "2–3 t",
+      "status": "bekreftet"
+    },
+    "innvendig_hurtig": {
+      "navn": "Innvendig hurtigrens",
+      "beskrivelse": "Rask innvendig rens: støvsuging og våttørk av flater.",
+      "kategori": "interior",
+      "pris": 1099,
+      "fra": false,
+      "tid": "1–2 t",
+      "status": "bekreftet"
+    },
+    "innvendig_detalj": {
+      "navn": "Innvendig detaljrens",
+      "beskrivelse": "Grundig innvendig rens med fokus på kvalitet framfor tempo: flekkfjerning i taket (himling), behandling av skinn med Koch-Chemie LeatherStar og plast/interiør med Koch-Chemie TopStar.",
+      "kategori": "interior",
+      "pris": 2999,
+      "fra": false,
+      "tid": "3–5 t",
+      "status": "bekreftet"
+    },
+    "innvendig_dyprens": {
+      "navn": "Innvendig dyprens",
+      "beskrivelse": "Dyprens av sterkt tilsmusset interiør: fjerning av fastsittende skitt, lukt og mugg.",
+      "kategori": "interior",
+      "pris": 4999,
+      "fra": true,
+      "tid": "1–2 dager (avhengig av tilsmussing)",
+      "status": "bekreftet"
+    },
+    "ozonbehandling": {
+      "navn": "Ozonbehandling (luktfjerning)",
+      "beskrivelse": "Fjerner vond lukt i kupéen med ozon.",
+      "kategori": "interior",
+      "pris": 599,
+      "fra": false,
+      "tid": "2–3 t",
+      "status": "bekreftet"
+    },
+    "skinn_impregnering": {
+      "navn": "Impregnering av skinnseter",
+      "beskrivelse": "Beskytter skinnet mot slitasje, uttørking og falming, gjør overflaten mer motstandsdyktig og enklere å holde ren i hverdagen. Vi rengjør og avfetter skinnet først, og impregnerer deretter med profesjonelle produkter fra Koch-Chemie som motvirker sprekker, flekker og fargeendring.",
+      "kategori": "interior",
+      "pris": 1999,
+      "fra": false,
+      "tid": "inntil 3 t",
+      "status": "bekreftet"
+    },
+    "tekstil_impregnering": {
+      "navn": "Impregnering av tekstilseter",
+      "beskrivelse": "Tilsvarende beskyttelse som for skinn, men med produkt tilpasset tekstil – motvirker flekker og gjør setene enklere å holde rene.",
+      "kategori": "interior",
+      "pris": 1899,
+      "fra": false,
+      "tid": "inntil 3 t",
+      "status": "bekreftet"
+    },
+    "bilpolering_1stegs": {
+      "navn": "Polering 1-stegs",
+      "beskrivelse": "Utvendig vask + 1-stegs polering.",
+      "kategori": "polering",
+      "pris": 2399,
+      "fra": false,
+      "tid": "inntil 5 t",
+      "status": "bekreftet",
+      "notat": "Under selvkost i kalkyle (~6000) – bevisst valgt pris."
+    },
+    "bilpolering_2stegs": {
+      "navn": "Polering 2-stegs",
+      "beskrivelse": "Utvendig vask + 2-stegs korrigering og polering.",
+      "kategori": "polering",
+      "pris": 3199,
+      "fra": false,
+      "tid": "inntil 7 t",
+      "status": "bekreftet"
+    },
+    "bilpolering_3stegs": {
+      "navn": "Polering 3-stegs",
+      "beskrivelse": "Utvendig vask + 3-stegs korrigering og polering.",
+      "kategori": "polering",
+      "pris": 4399,
+      "fra": false,
+      "tid": "1–2 dager",
+      "status": "bekreftet"
+    },
+    "lokal_polering": {
+      "navn": "Lokal polering / ripereparasjon",
+      "beskrivelse": "Behandling av enkelt panel (dør, skjerm, støtfanger).",
+      "kategori": "polering",
+      "pris": 1199,
+      "fra": true,
+      "enhet": "per del",
+      "tid": "1–3 t (avhengig av skade)",
+      "status": "bekreftet"
+    }
+  },
+
+  "tillegg": {
+    "voks": {
+      "navn": "Voksforsegling",
+      "beskrivelse": "Tillegg etter vask eller polering.",
+      "pris": 399,
+      "tid": "+15 min",
+      "status": "bekreftet"
+    },
+    "spray_keramikk": {
+      "navn": "Hurtig keramisk forsegling (spray)",
+      "beskrivelse": "Keramisk spray-forsegling som tillegg etter vask eller polering – ekstra glans og vannavvisning.",
+      "pris": 599,
+      "tid": "+15 min",
+      "status": "bekreftet"
+    }
+  }
+}

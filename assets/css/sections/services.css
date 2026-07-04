@@ -50,14 +50,14 @@
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
 }
 
-/* Text overlay */
+/* Text overlay (gradient scrim stays as-is) */
 .service-overlay {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: clamp(12px, 2vw, 20px);
+  padding: clamp(12px, 2vw, 20px) clamp(12px, 2vw, 20px) 6px;
   background: linear-gradient(
     to top,
     rgba(8, 9, 12, 0.92) 0%,
@@ -66,7 +66,17 @@
   );
 }
 
-.service-overlay h3 {
+/* Title row: name pill + orange arrow hint.
+   Mobile base = lightweight (no pill, no blur) for speed. */
+.service-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.service-head h3 {
   margin: 0;
   font-size: clamp(1.05rem, 2.4vw, 1.5rem);
   font-weight: 700;
@@ -74,26 +84,39 @@
   color: var(--text-main);
 }
 
-.service-overlay p {
-  margin: 0;
+.service-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--btn-primary-bg);
+}
+
+.service-arrow svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+/* Mobile default (base): description visible, clamped to 2 lines.
+   No animations, no backdrop-filter → fast on every device. */
+.service-desc {
+  display: block;
+}
+
+.service-desc p {
+  margin: 8px 0 0;
   font-size: clamp(0.8rem, 1.4vw, 0.95rem);
   line-height: 1.5;
   color: var(--text-muted);
 
-  /* hidden by default — revealed on hover (desktop) */
-  max-height: 0;
-  opacity: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
 
-.service-tile:hover .service-overlay p {
-  max-height: 8em;
-  opacity: 1;
-  margin-top: 8px;
-}
-
-/* Desktop bento: 4 columns, tiles sized by priority */
+/* Desktop bento: 4 columns, tiles sized by priority + hover animation */
 @media (min-width: 768px) {
   .services-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -118,16 +141,129 @@
     grid-column: span 1;
     grid-row: span 1;
   }
+
+  /* Full-width row; title pill and arrow box share the same height */
+  .service-head {
+    align-self: stretch;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Title on a near-transparent glass pill with a glowing border so it
+     lifts off the dark image instead of blending into the scrim */
+  .service-head h3 {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: rgba(10, 12, 16, 0.30);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-right: 1px solid rgba(255, 255, 255, 0.45);
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: inset 0 3px 10px -1px rgba(255, 255, 255, 0.30),
+                inset 3px 0 9px -3px rgba(255, 255, 255, 0.22),
+                inset -3px 0 9px -3px rgba(255, 255, 255, 0.22),
+                0 3px 12px rgba(0, 0, 0, 0.40);
+  }
+
+  /* Arrow lives in its own framed box (same height as the title pill),
+     hidden until hover, then reveals with a glowing orange outline */
+  .service-arrow {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    border: 1.5px solid transparent;
+    border-radius: 14px;
+    background: transparent;
+    transition: width 0.4s ease, opacity 0.4s ease,
+                background 0.4s ease, border-color 0.4s ease,
+                box-shadow 0.4s ease;
+  }
+
+  .service-tile:hover .service-arrow {
+    width: 54px;
+    opacity: 1;
+    background: rgba(10, 12, 16, 0.30);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    border-color: var(--btn-primary-bg);
+    box-shadow: 0 0 14px rgba(240, 90, 40, 0.50);
+  }
+
+  /* Barely-there left→right drift of the arrow icon inside its box */
+  .service-tile:hover .service-arrow svg {
+    animation: arrowNudge 1.3s ease-in-out 0.45s infinite;
+  }
+
+  /* Description reveal via grid-template-rows (0fr→1fr).
+     Height animates over a fixed duration regardless of text length,
+     so the timing is IDENTICAL on every tile. */
+  .service-desc {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: 0;
+    opacity: 0;
+    transition: grid-template-rows 0.45s ease, opacity 0.4s ease,
+                margin-top 0.45s ease;
+  }
+
+  .service-tile:hover .service-desc {
+    grid-template-rows: 1fr;
+    margin-top: 10px;
+    opacity: 1;
+  }
+
+  /* Matching glass pill; overflow + min-height:0 let the grid collapse it */
+  .service-desc p {
+    overflow: hidden;
+    min-height: 0;
+    margin: 0;
+    padding: 0 16px;
+    border-radius: 14px;
+    background: rgba(10, 12, 16, 0.30);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    border-top: 1px solid rgba(255, 255, 255, 0.55);
+    border-right: 1px solid rgba(255, 255, 255, 0.45);
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: inset 0 3px 10px -1px rgba(255, 255, 255, 0.30),
+                inset 3px 0 9px -3px rgba(255, 255, 255, 0.22),
+                inset -3px 0 9px -3px rgba(255, 255, 255, 0.22),
+                0 3px 12px rgba(0, 0, 0, 0.40);
+    color: var(--text-main);
+    text-align: center;
+
+    display: block;
+    -webkit-line-clamp: none;
+  }
+
+  /* Inner wrapper enforces a min height equal to a 2-line pill, so a
+     single-line description never collapses into an over-rounded blob.
+     Uses em → scales with the responsive font size at any breakpoint. */
+  .service-desc p span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3em; /* 2 lines × 1.5 line-height */
+  }
 }
 
-/* Touch screens have no hover → show the description (clamped to fit) */
-@media (max-width: 767px) {
-  .service-overlay p {
-    max-height: none;
-    opacity: 1;
-    margin-top: 6px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+/* Subtle, barely-there left→right drift of the arrow while hovering */
+@keyframes arrowNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px);
   }
 }

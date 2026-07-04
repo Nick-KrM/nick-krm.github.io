@@ -8,3 +8,6 @@ Thumbs.db
 /assets/images/*.png
 /assets/images/*.jpg
 /assets/images/*.jpeg
+
+# Internal business files (never publish prices/costs)
+*.xlsx
