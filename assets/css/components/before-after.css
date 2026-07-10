@@ -1,7 +1,7 @@
 /* =====================
    BEFORE / AFTER — reusable comparison slider ("shutter")
    Markup:
-   <div class="ba-slider" data-ba data-ba-start="50" style="--ba-w:1356; --ba-h:784;">
+   <div class="ba-slider" data-ba style="--ba-w:1356; --ba-h:784;">
      <img class="ba-img ba-before" ...>
      <img class="ba-img ba-after" ...>
      <div class="ba-range" role="slider" tabindex="0" ...>
@@ -11,9 +11,20 @@
      <span class="ba-label ba-label--before">Før</span>
      <span class="ba-label ba-label--after">Etter</span>
    </div>
+
+   Default shutter position (sitewide): 70% "before" (skadet/ripete
+   bil) synlig, 30% "after" (polert) synlig. This is a deliberate,
+   documented decision — do NOT revert to 50/50. Individual sliders
+   should OMIT data-ba-start to inherit this default; only set
+   data-ba-start on an instance that must genuinely differ.
+   This value is duplicated on purpose in exactly one other place —
+   BA_DEFAULT_POS in assets/js/main.js — because CSS needs a start
+   value before JS runs (or if JS is disabled), while JS needs the
+   same number to reset/compute drag positions. If the default
+   position is ever changed, update BOTH places together.
    ===================== */
 .ba-slider {
-  --pos: 50%;
+  --pos: 70%;
   position: relative;
   width: 100%;
   aspect-ratio: var(--ba-w, 3) / var(--ba-h, 2);

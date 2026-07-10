@@ -2,7 +2,7 @@
   "_om": "Prisliste – én kilde til sannhet for nettsiden. Alle priser i NOK og INKL. 25% MVA (forbrukerpris). Endre her, så oppdaterer vi sidene.",
   "valuta": "NOK",
   "mva_inkludert": true,
-  "oppdatert": "2026-07-04",
+  "oppdatert": "2026-07-10",
   "generell_note": "Alle priser gjelder vanlige personbiler. For varebil, bobil eller svært tilsmussede interiører kan det tilkomme et tillegg. Du får alltid et prisestimat før vi starter arbeidet.",
 
   "pakker": {
@@ -151,6 +151,14 @@
       "fra": true,
       "enhet": "per del",
       "tid": "1–3 t (avhengig av skade)",
+      "status": "bekreftet"
+    },
+    "dekkskift": {
+      "navn": "Dekkskift",
+      "beskrivelse": "Sesongskifte av hjul (dekk allerede montert på felg).",
+      "kategori": "dekk",
+      "pris": 399,
+      "fra": false,
       "status": "bekreftet"
     }
   },

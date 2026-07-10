@@ -14,3 +14,6 @@ Thumbs.db
 *.xlsx.tmp
 *.tmp
 ~$*
+
+# Local project-memory / handoff notes for Claude (never publish)
+CLAUDE.md

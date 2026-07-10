@@ -1,0 +1,193 @@
+/* =========================================================
+   CONTACT MODAL — quick-contact picker
+   Opened from any "Bestill time" link (href="/kontakt/").
+   Markup: partials/footer.html (#contact-modal).
+   JS: initContactModal() in main.js.
+   ========================================================= */
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.contact-modal[hidden] {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .contact-modal {
+    align-items: center;
+  }
+}
+
+.contact-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 7, 10, 0.72);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+.contact-modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 32px) clamp(20px, 4vw, 26px) clamp(20px, 3vw, 24px);
+
+  background: var(--bg-section);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+
+  animation: contactModalUp 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 900px) {
+  .contact-modal-panel {
+    margin: 0 16px;
+    border-radius: var(--radius);
+  }
+}
+
+@keyframes contactModalUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-modal-panel { animation: none; }
+}
+
+.contact-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+}
+
+.contact-modal-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-modal-panel h2 {
+  margin: 0 0 6px;
+  padding-right: 32px;
+  font-size: var(--fs-h3);
+  color: var(--text-main);
+}
+
+.contact-modal-lead {
+  margin: 0 0 20px;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-base);
+  color: var(--text-muted);
+}
+
+.contact-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-modal-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  text-decoration: none;
+
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.contact-modal-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.contact-modal-btn--whatsapp {
+  border-color: rgba(37, 211, 102, 0.35);
+  background: rgba(37, 211, 102, 0.1);
+}
+.contact-modal-btn--whatsapp:hover {
+  background: rgba(37, 211, 102, 0.16);
+}
+
+.contact-modal-btn--call {
+  border-color: rgba(240, 90, 40, 0.35);
+  background: rgba(240, 90, 40, 0.1);
+}
+.contact-modal-btn--call:hover {
+  background: rgba(240, 90, 40, 0.16);
+}
+
+/* Call & SMS are mobile-only — desktop keeps WhatsApp + e-post (aftalt policy) */
+@media (min-width: 900px) {
+  .contact-modal-btn--call,
+  .contact-modal-btn--sms {
+    display: none;
+  }
+}
+
+.contact-modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+}
+
+.contact-modal-icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.contact-modal-btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.contact-modal-btn-title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.contact-modal-btn-sub {
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--text-muted);
+}

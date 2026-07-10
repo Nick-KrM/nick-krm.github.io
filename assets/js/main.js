@@ -234,14 +234,25 @@ function initBurger() {
    Before / After — reusable comparison slider ("shutter")
    Works with mouse, touch (Pointer Events) and keyboard.
    Any element matching [data-ba] on the page is initialised.
+
+   Default shutter position: 70% "before" (skadet/ripete) synlig,
+   30% "after" (polert) synlig — bevisst valg, IKKE 50/50, gjelder
+   for ALLE ba-sliders på hele siden med mindre en enkelt slider
+   eksplisitt overstyrer med data-ba-start="...".
+   Dette tallet er dupliseres med vilje ETT sted til: --pos: 70%
+   i assets/css/components/before-after.css (CSS-startverdi, brukes
+   før JS rekker å kjøre / hvis JS er deaktivert). Endre BEGGE
+   stedene sammen hvis default-posisjonen noen gang skal justeres.
    ========================================================= */
+const BA_DEFAULT_POS = 70;
+
 function initBeforeAfter() {
   const sliders = document.querySelectorAll("[data-ba]");
 
   sliders.forEach(slider => {
     const range = slider.querySelector(".ba-range");
     const start = parseFloat(slider.dataset.baStart);
-    let pos = Number.isFinite(start) ? start : 50;
+    let pos = Number.isFinite(start) ? start : BA_DEFAULT_POS;
     let dragging = false;
 
     function apply(p) {
@@ -296,11 +307,95 @@ function initBeforeAfter() {
 }
 
 /* =========================================================
+   Map links — build a route reliably on phones
+   Desktop keeps the normal Google Maps directions link. On a
+   phone the universal web link often opens the app without
+   building the route, so we hand off to the native maps app via
+   its own URL scheme, which geocodes the address and routes from
+   the user's current location.
+   ========================================================= */
+function initMapLinks() {
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPad|iPhone|iPod/.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  if (!isIOS && !isAndroid) return; // desktop: default href is fine
+
+  document.querySelectorAll(".js-map-dir").forEach(a => {
+    a.addEventListener("click", (e) => {
+      const addr = a.getAttribute("data-address");
+      if (!addr) return;
+      const enc = encodeURIComponent(addr);
+      e.preventDefault();
+      if (isAndroid) {
+        // Google Maps navigation intent → builds the route
+        window.location.href = "google.navigation:q=" + enc;
+      } else {
+        // Apple Maps → driving directions from current location
+        window.location.href = "maps://?daddr=" + enc + "&dirflg=d";
+      }
+    });
+  });
+}
+
+/* =========================================================
+   Contact modal — quick-contact picker opened from any
+   "Bestill time" link (href="/kontakt/"), site-wide.
+   Markup lives in partials/footer.html (#contact-modal), so the
+   listeners are delegated on document and the modal element is
+   looked up lazily — this makes it robust to the footer partial
+   still being in flight when initContactModal() runs.
+   ========================================================= */
+function initContactModal() {
+  function getModal() {
+    return document.getElementById("contact-modal");
+  }
+
+  function openModal(modal) {
+    modal.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    const closeBtn = modal.querySelector(".contact-modal-close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeModal(modal) {
+    modal.hidden = true;
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+  }
+
+  document.addEventListener("click", (e) => {
+    const modal = getModal();
+    if (!modal) return; // footer not loaded yet — let the link navigate normally
+
+    const opener = e.target.closest('a[href="/kontakt/"]');
+    if (opener) {
+      e.preventDefault();
+      openModal(modal);
+      return;
+    }
+
+    if (modal.hidden) return;
+
+    if (e.target.closest(".contact-modal-close") || e.target.closest(".contact-modal-overlay")) {
+      closeModal(modal);
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    const modal = getModal();
+    if (!modal || modal.hidden) return;
+    if (e.key === "Escape") closeModal(modal);
+  });
+}
+
+/* =========================================================
    Boot
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initBeforeAfter();
+  initContactModal();
   loadPartial("site-header", "/partials/header.html", () => {
     initBurger();
     initScrollSpy();
@@ -309,5 +404,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadPartial("site-footer", "/partials/footer.html", () => {
     const y = document.getElementById("footer-year");
     if (y) y.textContent = new Date().getFullYear();
+    initMapLinks(); // .js-map-dir now lives in the footer partial — must run after it loads
   });
 });
