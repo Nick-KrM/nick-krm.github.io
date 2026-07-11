@@ -150,6 +150,14 @@
   background: rgba(240, 90, 40, 0.16);
 }
 
+.contact-modal-btn--instagram {
+  border-color: rgba(225, 48, 108, 0.35);
+  background: rgba(225, 48, 108, 0.1);
+}
+.contact-modal-btn--instagram:hover {
+  background: rgba(225, 48, 108, 0.16);
+}
+
 /* Call & SMS are mobile-only — desktop keeps WhatsApp + e-post (aftalt policy) */
 @media (min-width: 900px) {
   .contact-modal-btn--call,
