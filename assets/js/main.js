@@ -339,22 +339,73 @@ function initMapLinks() {
 
 /* =========================================================
    Contact modal — quick-contact picker opened from any
-   "Bestill time" link (href="/kontakt/"), site-wide.
-   Markup lives in partials/footer.html (#contact-modal), so the
-   listeners are delegated on document and the modal element is
-   looked up lazily — this makes it robust to the footer partial
-   still being in flight when initContactModal() runs.
+   "Bestill time"-type link (href="/kontakt/"), site-wide.
+
+   Hver åpner-knapp bærer sitt eget "pass":
+     data-cta-intent="order" | "befaring" | "inquiry"   (standard: order)
+     data-cta-service="2-stegs polering"                (valgfritt)
+   Når modalen åpnes bygges en ferdig melding på norsk og settes inn i
+   WhatsApp, SMS og E-post. Ring (det er en telefonsamtale) og Instagram
+   (ingen støtte for forhåndsutfylt DM) får IKKE tekst — de åpnes bare.
+
+   Meldingsmaler (mild variant):
+     order    → «Hei! Jeg vil gjerne bestille [tjeneste].»
+     befaring → «Hei! Jeg vil gjerne bestille en gratis befaring for [tjeneste].»
+     inquiry  → «Hei! Jeg vil gjerne høre mer om [tjeneste].»
+   Uten tjeneste faller order tilbake til «...bestille time.» og
+   inquiry til «...høre mer om tjenestene deres.»
+
+   Markup for modalen ligger i partials/footer.html (#contact-modal),
+   så lytterne er delegert på document og modal-elementet slås opp lazy
+   (robust mot at footer-partialen fortsatt lastes når dette kjører).
    ========================================================= */
+var CONTACT = { tel: "+4796694681", wa: "4796694681", email: "kontakt@renewdetailing.no" };
+
+function buildContactMessage(intent, service) {
+  service = (service || "").trim();
+  if (intent === "befaring") {
+    return "Hei! Jeg vil gjerne bestille en gratis befaring" + (service ? " for " + service : "") + ".";
+  }
+  if (intent === "inquiry") {
+    return "Hei! Jeg vil gjerne høre mer om " + (service || "tjenestene deres") + ".";
+  }
+  // order (standard)
+  return "Hei! Jeg vil gjerne bestille " + (service || "time") + ".";
+}
+
+function contactSubject(intent, service) {
+  service = (service || "").trim();
+  if (intent === "befaring") return "Gratis befaring" + (service ? ": " + service : "");
+  if (intent === "inquiry") return "Forespørsel" + (service ? ": " + service : "");
+  return "Bestilling" + (service ? ": " + service : " av time");
+}
+
 function initContactModal() {
   function getModal() {
     return document.getElementById("contact-modal");
   }
 
-  function openModal(modal) {
+  // Fyll WhatsApp / SMS / E-post med den ferdige meldingen. Ring + Instagram røres ikke.
+  function applyMessage(modal, intent, service) {
+    var msg = buildContactMessage(intent, service);
+    var enc = encodeURIComponent(msg);
+    var wa = modal.querySelector(".contact-modal-btn--whatsapp");
+    var sms = modal.querySelector(".contact-modal-btn--sms");
+    var mail = modal.querySelector(".contact-modal-btn--email");
+    if (wa) wa.setAttribute("href", "https://wa.me/" + CONTACT.wa + "?text=" + enc);
+    if (sms) sms.setAttribute("href", "sms:" + CONTACT.tel + "?body=" + enc);
+    if (mail) {
+      mail.setAttribute("href", "mailto:" + CONTACT.email +
+        "?subject=" + encodeURIComponent(contactSubject(intent, service)) + "&body=" + enc);
+    }
+  }
+
+  function openModal(modal, intent, service) {
+    applyMessage(modal, intent, service);
     modal.hidden = false;
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
-    const closeBtn = modal.querySelector(".contact-modal-close");
+    var closeBtn = modal.querySelector(".contact-modal-close");
     if (closeBtn) closeBtn.focus();
   }
 
@@ -371,7 +422,8 @@ function initContactModal() {
     const opener = e.target.closest('a[href="/kontakt/"]');
     if (opener) {
       e.preventDefault();
-      openModal(modal);
+      openModal(modal, opener.getAttribute("data-cta-intent") || "order",
+                       opener.getAttribute("data-cta-service") || "");
       return;
     }
 
