@@ -4,7 +4,7 @@
 .service-intro {
   background-color: var(--bg-main);
   /* clear the fixed header (first section on the page) */
-  padding-top: clamp(110px, 14vh, 150px);
+  padding-top: clamp(120px, 15vh, 160px);
 }
 
 .service-intro-inner {

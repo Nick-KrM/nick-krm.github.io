@@ -2,7 +2,7 @@
   "_om": "Prisliste – én kilde til sannhet for nettsiden. Alle priser i NOK og INKL. 25% MVA (forbrukerpris). Endre her, så oppdaterer vi sidene.",
   "valuta": "NOK",
   "mva_inkludert": true,
-  "oppdatert": "2026-07-10",
+  "oppdatert": "2026-07-15",
   "generell_note": "Alle priser gjelder vanlige personbiler. For varebil, bobil eller svært tilsmussede interiører kan det tilkomme et tillegg. Du får alltid et prisestimat før vi starter arbeidet.",
 
   "pakker": {
@@ -14,21 +14,38 @@
       "tid": "fra 1 dag (ca. 8 t)",
       "status": "bekreftet"
     },
+    "keramikk_one_evo": {
+      "navn": "Keramisk coating – One EVO",
+      "beskrivelse": "Ekte keramisk coating (GYEON Q² One EVO) på lakk med god glans og kjemikaliebestandighet, til en god pris. Inkluderer trefaset vask, fjerning av asfalt/bek, 1-stegs polering, coating og beskyttende toppforsegling. Holdbarhet ca. 24 måneder.",
+      "pris": 4999,
+      "fra": false,
+      "tid": "ca. 1 dag",
+      "status": "bekreftet"
+    },
+    "keramikk_mohs_evo": {
+      "navn": "Keramisk coating – Mohs EVO",
+      "beskrivelse": "Keramisk coating (GYEON Q² Mohs EVO) – hardere, tykkere og mer slitesterk enn One EVO, med ekstrem hydrofob effekt. Samme forbehandling: trefaset vask, fjerning av asfalt/bek, 1-stegs polering, coating og beskyttende toppforsegling. Holdbarhet ca. 36 måneder.",
+      "pris": 5999,
+      "fra": false,
+      "tid": "ca. 1 dag",
+      "status": "bekreftet"
+    },
     "toppakke_keramikk": {
       "navn": "Toppakke – Keramikk",
-      "navn_status": "midlertidig – kan endres senere",
-      "beskrivelse": "Vår mest komplette pakke for nye og nesten nye biler: full keramisk beskyttelse for maksimal glans, hydrofobisk effekt og UV-beskyttelse.",
+      "beskrivelse": "Vår mest komplette pakke for nye og nesten nye biler: keramisk coating på lakk (Mohs EVO), glass (View EVO), felger (Rim EVO) og utvendig plast (Trim EVO), pluss full innvendig behandling.",
       "inkluderer": [
-        "Utvendig vask",
-        "Innvendig rens",
-        "Behandling av seter",
-        "Keramisk coating på lakk – to lag (beste keramikk) for maksimal beskyttelse",
-        "Keramisk coating på felger",
-        "Keramisk coating på glass og utvendig plast"
+        "Utvendig vask + fjerning av asfalt og bek",
+        "Keramisk coating på lakk (Mohs EVO)",
+        "Keramisk coating på glass (View EVO)",
+        "Keramisk coating på felger (Rim EVO)",
+        "Keramisk coating på utvendig plast (Trim EVO)",
+        "Dyprens av interiør (PolStar)",
+        "Behandling av seter – skinn (LeatherStar) eller tekstil",
+        "Antistatisk behandling av interiørplast (TopStar)"
       ],
-      "pris": 11999,
+      "pris": 12999,
       "fra": false,
-      "tid": "2 dager",
+      "tid": "minst 2 dager",
       "status": "bekreftet"
     }
   },
@@ -38,7 +55,7 @@
       "navn": "Bilvask (utvendig)",
       "beskrivelse": "Trefaset håndvask med avfetting.",
       "kategori": "vask",
-      "pris": 899,
+      "pris": 999,
       "fra": false,
       "tid": "45–60 min",
       "status": "bekreftet"
@@ -56,7 +73,7 @@
       "navn": "Vask + innvendig rens",
       "beskrivelse": "Utvendig vask kombinert med rask innvendig rens.",
       "kategori": "kombi",
-      "pris": 1699,
+      "pris": 1799,
       "fra": false,
       "tid": "2–3 t",
       "status": "bekreftet"
@@ -65,7 +82,7 @@
       "navn": "Innvendig hurtigrens",
       "beskrivelse": "Rask innvendig rens: støvsuging og våttørk av flater.",
       "kategori": "interior",
-      "pris": 1099,
+      "pris": 1199,
       "fra": false,
       "tid": "1–2 t",
       "status": "bekreftet"

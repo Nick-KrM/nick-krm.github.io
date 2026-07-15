@@ -12,24 +12,63 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
   min-height: 64px;
-  padding: 12px 20px;
+  padding: 0;
 }
 
 @media (min-width: 900px) {
   .header {
     min-height: 72px;
-    padding: 14px 40px;
+    padding: 0;
   }
 }
 
 .header-container {
   max-width: var(--container-width);
   margin: 0 auto;
+  padding: 12px 20px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .header-container { padding: 14px 40px; }
+}
+
+/* =====================
+   ANNOUNCEMENT TICKER (top strip of the fixed header)
+   Pure CSS marquee — no JS, no images. Negligible weight.
+   ===================== */
+.site-ticker {
+  overflow: hidden;
+  background: var(--btn-primary-bg);
+  color: #fff;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+.site-ticker__track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  flex: none;
+  animation: tickerScroll 32s linear infinite;
+  will-change: transform;
+}
+.site-ticker__track > span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.ti-dot { padding: 0 clamp(12px, 2vw, 22px); opacity: 0.7; }
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-ticker__track { animation: none; }
 }
 
 /* =====================
@@ -262,7 +301,7 @@
   .main-nav ul {
     list-style: none;
     margin: 0;
-    padding: 96px 22px 32px;
+    padding: 120px 22px 32px;
 
     /* flex column keeps items together at the top (grid was stretching them) */
     display: flex;

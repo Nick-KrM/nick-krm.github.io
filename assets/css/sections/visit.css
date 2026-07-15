@@ -4,7 +4,7 @@
 .visit {
   background-color: var(--bg-main);
   /* clear the fixed header (this is the first section on the page) */
-  padding-top: clamp(110px, 14vh, 150px);
+  padding-top: clamp(120px, 15vh, 160px);
 }
 
 .visit-inner {
