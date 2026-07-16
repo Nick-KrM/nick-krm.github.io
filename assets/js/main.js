@@ -442,12 +442,71 @@ function initContactModal() {
 }
 
 /* =========================================================
+   Cookie consent — Google Consent Mode v2 (samtykke først)
+   Standard i <head> på hver side setter alt til "denied".
+   Her bygges banneret (kun hvis ingen valg er lagret) og
+   oppdaterer samtykket ved klikk. Ring window.openCookieSettings()
+   for å åpne banneret på nytt (lenke i footeren).
+   ========================================================= */
+function initCookieConsent() {
+  var KEY = "renew-cookie-consent";
+  function update(choice) {
+    if (typeof gtag === "function") {
+      var g = choice === "granted" ? "granted" : "denied";
+      gtag("consent", "update", {
+        ad_storage: g, ad_user_data: g, ad_personalization: g, analytics_storage: g
+      });
+    }
+  }
+  function build() {
+    if (document.getElementById("cc-banner")) return;
+    var b = document.createElement("div");
+    b.id = "cc-banner";
+    b.className = "cc-banner";
+    b.setAttribute("role", "dialog");
+    b.setAttribute("aria-label", "Informasjonskapsler");
+    b.innerHTML =
+      '<div class="cc-inner">' +
+        '<p class="cc-text">Vi bruker informasjonskapsler for at nettsiden skal fungere, og – hvis du samtykker – til statistikk og markedsføring. Les mer i <a href="/personvern/">personvernerklæringen</a>.</p>' +
+        '<div class="cc-actions">' +
+          '<button type="button" class="cc-btn cc-btn--reject" data-cc="reject">Bare nødvendige</button>' +
+          '<button type="button" class="cc-btn cc-btn--accept" data-cc="accept">Godta alle</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(b);
+    b.addEventListener("click", function (e) {
+      var t = e.target.closest("[data-cc]");
+      if (!t) return;
+      var choice = t.getAttribute("data-cc") === "accept" ? "granted" : "denied";
+      try { localStorage.setItem(KEY, choice); } catch (_) {}
+      update(choice);
+      b.remove();
+    });
+  }
+  var stored = null;
+  try { stored = localStorage.getItem(KEY); } catch (_) {}
+  if (stored !== "granted" && stored !== "denied") build();
+
+  window.openCookieSettings = function () {
+    try { localStorage.removeItem(KEY); } catch (_) {}
+    build();
+  };
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(".js-cookie-settings")) {
+      e.preventDefault();
+      window.openCookieSettings();
+    }
+  });
+}
+
+/* =========================================================
    Boot
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initBeforeAfter();
   initContactModal();
+  initCookieConsent();
   loadPartial("site-header", "/partials/header.html", () => {
     initBurger();
     initScrollSpy();

@@ -196,8 +196,8 @@
   .hero-social a[href*="instagram"]:hover {
     color: #e1306c; /* Instagram pink */
   }
-  .hero-social a[href*="facebook"]:hover {
-    color: #1877f2; /* Facebook blue */
+  .hero-social a[href^="mailto:"]:hover {
+    color: #f05a28; /* brand orange — e-post */
   }
 
   .hero-social svg {

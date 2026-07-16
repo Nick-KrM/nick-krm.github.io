@@ -15,5 +15,5 @@ Thumbs.db
 *.tmp
 ~$*
 
-# Local project-memory / handoff notes for Claude (never publish)
+# Internal notes / память для Claude — не публикуем
 CLAUDE.md

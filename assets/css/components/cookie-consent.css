@@ -1,0 +1,55 @@
+/* =========================================================
+   COOKIE CONSENT — bunnbanner (samtykke før sporing)
+   Vises kun hvis brukeren ikke har valgt. Bygges av
+   initCookieConsent() i main.js.
+   ========================================================= */
+.cc-banner {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1400;
+  background: var(--bg-section);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45);
+  padding: clamp(14px, 3vw, 20px) clamp(16px, 4vw, 32px);
+  animation: ccUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes ccUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .cc-banner { animation: none; } }
+
+.cc-inner {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 24px);
+  flex-wrap: wrap;
+}
+.cc-text {
+  flex: 1 1 320px;
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.cc-text a { color: var(--btn-primary-bg); }
+
+.cc-actions { display: flex; gap: 10px; flex: 0 0 auto; }
+.cc-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.cc-btn--accept { background: var(--btn-primary-bg); color: #fff; }
+.cc-btn--accept:hover { transform: translateY(-1px); }
+.cc-btn--reject { background: transparent; color: var(--text-main); border-color: rgba(255, 255, 255, 0.25); }
+.cc-btn--reject:hover { border-color: rgba(255, 255, 255, 0.5); }
+
+@media (max-width: 600px) {
+  .cc-actions { width: 100%; }
+  .cc-btn { flex: 1; text-align: center; }
+}
